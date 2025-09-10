@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -414,6 +414,9 @@
             background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
             border-radius: 0 0 12px 12px;
             border-top: 2px solid #333;
+            padding: 10px 0 10px 0;
+            overflow: hidden;
+
         }
 
         .vhs-reels {
@@ -484,16 +487,22 @@
             overflow: hidden;
         }
 
-        .vhs-window::before {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            right: 2px;
-            height: 1px;
-            background: rgba(139, 69, 19, 0.6);
-            border-radius: 2px;
-        }
+.vhs-window::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background-image: repeating-linear-gradient(
+        0deg,
+        rgba(139, 69, 19, 0.6) 0,
+        rgba(139, 69, 19, 0.6) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    border-radius: 2px;
+}
 
         /* Enhanced Play Overlay */
         .vhs-play-overlay {
