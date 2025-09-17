@@ -5,20 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ARUM WILSON - Film Portfolio</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --neon-red: #ff0040;
-            --neon-yellow: #ffd700;
-            --cool-yellow: #f4e04d;
-            --deep-black: #0f0f23;
-            --film-gray: #1e1e3f;
-            --vintage-white: #f8f8f8;
-            --accent-orange: #ff6b35;
-            --cool-blue: #4a90e2;
-            --purple-dark: #2d1b69;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -27,210 +15,188 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: var(--deep-black);
-            color: var(--vintage-white);
-            overflow-x: hidden;
+            background: #0f0f23;
+            color: #f8f8f8;
+            line-height: 1.6;
         }
 
-        /* Magazine Title Section */
-        .magazine-section {
-            height: 100vh;
-            position: relative;
-            background: linear-gradient(135deg, #0f0f23 0%, #1e1e3f 50%, #2d1b69 100%);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 20px;
+        /* Magazine Layout - Fixed and Responsive */
+        .magazine-hero {
+            min-height: 100vh;
             padding: 20px;
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(135deg, #0f0f23 0%, #1e1e3f 50%, #2d1b69 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.6s ease;
         }
 
-        .magazine-section.condensed {
-            height: 120px;
+        .magazine-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 15px;
+            max-width: 1200px;
+            width: 100%;
+            height: 70vh;
+            transition: all 0.6s ease;
+        }
+
+        .magazine-hero.condensed {
+            min-height: 100px;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            grid-template-columns: repeat(5, 1fr);
-            grid-template-rows: 1fr;
-            padding: 10px;
             background: rgba(15, 15, 35, 0.95);
             backdrop-filter: blur(10px);
-            border-bottom: 2px solid var(--neon-red);
+            border-bottom: 2px solid #ff0040;
         }
 
-        .magazine-photo {
+        .magazine-hero.condensed .magazine-grid {
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: 1fr;
+            height: 60px;
+            gap: 10px;
+        }
+
+        .photo-card {
             position: relative;
+            border-radius: 10px;
             overflow: hidden;
-            border-radius: 15px;
             cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            background: linear-gradient(45deg, #333, #111);
+            background: #1a1a1a;
+            transition: all 0.4s ease;
         }
 
-        .magazine-photo:first-child {
-            grid-column: 1 / 3;
+        .photo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 0, 64, 0.3);
         }
 
-        .magazine-section.condensed .magazine-photo:first-child {
-            grid-column: 1;
-        }
-
-        .magazine-photo img {
+        .photo-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            filter: brightness(0.8);
+            transition: transform 0.4s ease;
         }
 
-        .magazine-photo:hover img {
-            transform: scale(1.1);
-            filter: brightness(1);
+        .photo-card:hover img {
+            transform: scale(1.05);
         }
 
-        .magazine-text {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 15px;
-            border-radius: 8px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 0, 64, 0.3);
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
+        /* Main photo with name overlay - spans 2 columns */
+        .photo-main {
+            grid-column: span 2;
+            position: relative;
         }
 
-        .magazine-photo:hover .magazine-text {
-            transform: translateY(0);
+        .magazine-hero.condensed .photo-main {
+            grid-column: span 1;
         }
 
-        .magazine-section.condensed .magazine-text {
-            display: none;
-        }
-
-        .magazine-title {
+        /* Name overlay on main photo */
+        .name-overlay {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 10;
             text-align: center;
-            pointer-events: none;
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 2px solid #ff0040;
+            transition: all 0.4s ease;
         }
 
-        .magazine-section.condensed .magazine-title {
-            position: relative;
-            top: auto;
-            left: auto;
+        .magazine-hero.condensed .name-overlay {
+            position: static;
             transform: none;
-            grid-column: 3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: none;
+            border: none;
+            backdrop-filter: none;
+            padding: 5px;
         }
 
         .hero-title {
             font-family: 'Oswald', sans-serif;
-            font-size: 4rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            letter-spacing: 8px;
-            background: linear-gradient(45deg, var(--cool-yellow), #ffed4e, #f9ca24);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 2px 2px 4px rgba(244, 224, 77, 0.3);
-            margin-bottom: 1rem;
+            letter-spacing: 4px;
+            color: #ffd700;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         }
 
-        .magazine-section.condensed .hero-title {
-            font-size: 2rem;
-            letter-spacing: 3px;
-            margin-bottom: 0;
+        .magazine-hero.condensed .hero-title {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 2px;
         }
 
         .subtitle {
             font-family: 'Oswald', sans-serif;
-            font-size: 1.5rem;
-            color: var(--neon-red);
-            letter-spacing: 3px;
+            font-size: 1rem;
+            color: #ff0040;
+            letter-spacing: 2px;
             font-weight: 300;
         }
 
-        .magazine-section.condensed .subtitle {
-            font-size: 1rem;
-            letter-spacing: 2px;
+        .magazine-hero.condensed .subtitle {
+            font-size: 0.8rem;
+            letter-spacing: 1px;
         }
 
-        /* Portrait Modal */
-        .portrait-modal {
-            position: fixed;
-            top: 0;
+        /* Photo descriptions */
+        .photo-desc {
+            position: absolute;
+            bottom: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.95);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s ease;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            color: white;
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
         }
 
-        .portrait-modal.active {
-            opacity: 1;
-            visibility: visible;
+        .magazine-hero.condensed .photo-desc {
+            display: none;
         }
 
-        .portrait-content {
-            position: relative;
-            max-width: 80%;
-            max-height: 80%;
-            text-align: center;
+        .photo-card:hover .photo-desc {
+            transform: translateY(0);
         }
 
-        .portrait-content img {
-            max-width: 100%;
-            max-height: 70vh;
-            object-fit: cover;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+        .desc-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            color: #ffd700;
+            margin-bottom: 5px;
         }
 
-        .contact-overlay {
-            position: absolute;
-            bottom: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(15, 15, 35, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--neon-red);
-            min-width: 300px;
+        .desc-text {
+            font-size: 0.8rem;
+            opacity: 0.9;
         }
 
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: var(--vintage-white);
-            font-size: 2rem;
-            cursor: pointer;
-            z-index: 2001;
+        /* Content sections */
+        .content {
+            padding-top: 0;
+            transition: padding-top 0.6s ease;
         }
 
-        /* Video Sections */
+        .content.with-navbar {
+            padding-top: 120px;
+        }
+
+        /* Video sections */
         .video-section {
-            height: 100vh;
+            min-height: 100vh;
             position: relative;
             display: flex;
             align-items: center;
@@ -241,20 +207,16 @@
         .video-thumbnail {
             width: 100%;
             height: 100%;
-            position: relative;
-            cursor: pointer;
-            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
         .video-thumbnail img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .video-thumbnail:hover img {
-            transform: scale(1.05);
+            transition: transform 0.8s ease;
         }
 
         .video-overlay {
@@ -270,76 +232,80 @@
                 rgba(255, 0, 64, 0.3) 100%
             );
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             opacity: 0;
             transition: opacity 0.5s ease;
+            cursor: pointer;
         }
 
-        .video-thumbnail:hover .video-overlay {
+        .video-section:hover .video-overlay {
             opacity: 1;
         }
 
-        .video-info {
-            text-align: center;
-            z-index: 2;
+        .video-section:hover .video-thumbnail img {
+            transform: scale(1.05);
         }
 
         .video-title {
             font-family: 'Oswald', sans-serif;
             font-size: 4rem;
             font-weight: 700;
-            color: var(--vintage-white);
+            color: #f8f8f8;
             margin-bottom: 1rem;
+            text-align: center;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         }
 
         .video-description {
             font-size: 1.2rem;
-            color: var(--cool-yellow);
+            color: #ffd700;
             margin-bottom: 2rem;
             max-width: 600px;
+            text-align: center;
         }
 
         .play-button {
             width: 100px;
             height: 100px;
-            border: 3px solid var(--neon-red);
+            border: 3px solid #ff0040;
             border-radius: 50%;
             background: rgba(255, 0, 64, 0.2);
-            color: var(--neon-red);
+            color: #ff0040;
             font-size: 2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto;
+            transition: all 0.3s ease;
         }
 
         .play-button:hover {
-            background: var(--neon-red);
-            color: var(--deep-black);
+            background: #ff0040;
+            color: #0f0f23;
             transform: scale(1.1);
-            box-shadow: 0 0 30px var(--neon-red);
+            box-shadow: 0 0 30px #ff0040;
         }
 
-        /* Horizontal Scroll Container */
-        .horizontal-scroll {
+        /* Horizontal scroll container */
+        .scroll-container {
             position: absolute;
-            bottom: 50px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 20px;
-            z-index: 3;
+            gap: 15px;
+            z-index: 10;
+            max-width: 90%;
+            overflow-x: auto;
+            padding: 10px;
         }
 
         .scroll-item {
-            width: 200px;
-            height: 120px;
+            min-width: 180px;
+            height: 100px;
             background: rgba(0, 0, 0, 0.8);
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
             cursor: pointer;
             transition: transform 0.3s ease;
@@ -347,107 +313,98 @@
         }
 
         .scroll-item:hover {
-            transform: translateY(-10px);
-            border-color: var(--neon-red);
+            transform: translateY(-5px);
+            border-color: #ff0040;
         }
 
         .scroll-item img {
             width: 100%;
-            height: 80%;
+            height: 70px;
             object-fit: cover;
         }
 
         .scroll-item-title {
-            padding: 8px;
-            font-size: 0.8rem;
+            padding: 5px;
+            font-size: 0.7rem;
             text-align: center;
             font-family: 'JetBrains Mono', monospace;
         }
 
-        /* Navigation Arrows */
-        .scroll-arrow {
+        /* Contact Modal */
+        .contact-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .contact-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .contact-content {
+            background: rgba(30, 30, 63, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #ff0040;
+            backdrop-filter: blur(20px);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .close-btn {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 0, 64, 0.8);
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 4;
-        }
-
-        .scroll-arrow:hover {
-            background: var(--neon-red);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .scroll-arrow.left {
-            left: 20px;
-        }
-
-        .scroll-arrow.right {
+            top: 15px;
             right: 20px;
+            background: none;
+            border: none;
+            color: #f8f8f8;
+            font-size: 2rem;
+            cursor: pointer;
         }
 
-        /* Content padding for condensed navbar */
-        .content-padding {
-            padding-top: 140px;
+        .contact-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            color: #ffd700;
+            margin-bottom: 20px;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .magazine-section {
-                grid-template-columns: 1fr;
-                grid-template-rows: repeat(4, 1fr);
-                height: 120vh;
-            }
-
-            .magazine-section.condensed {
-                height: 80px;
-                grid-template-columns: repeat(3, 1fr);
-                padding: 5px;
-            }
-
-            .magazine-photo:first-child {
-                grid-column: 1;
-            }
-
-            .hero-title {
-                font-size: 2.5rem;
-                letter-spacing: 4px;
-            }
-
-            .magazine-section.condensed .hero-title {
-                font-size: 1.2rem;
-                letter-spacing: 1px;
-            }
-
-            .video-title {
-                font-size: 2.5rem;
-            }
-
-            .horizontal-scroll {
-                bottom: 20px;
-            }
-
-            .scroll-item {
-                width: 150px;
-                height: 90px;
-            }
-
-            .content-padding {
-                padding-top: 100px;
-            }
+        .contact-info {
+            margin: 15px 0;
+            font-size: 1rem;
         }
 
-        /* Smooth scroll */
-        html {
-            scroll-behavior: smooth;
+        .contact-info i {
+            color: #ff0040;
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: #f8f8f8;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #ff0040;
         }
 
         /* Video Modal */
@@ -464,7 +421,7 @@
             z-index: 3000;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.5s ease;
+            transition: all 0.4s ease;
         }
 
         .video-modal.active {
@@ -472,307 +429,367 @@
             visibility: visible;
         }
 
-        .video-modal-content {
-            position: relative;
+        .video-content {
             width: 90%;
-            max-width: 1200px;
+            max-width: 1000px;
             aspect-ratio: 16/9;
             background: #000;
             border-radius: 10px;
             overflow: hidden;
+            position: relative;
         }
 
-        .video-modal iframe {
+        .video-content iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .magazine-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: 2fr 1fr 1fr 1fr 1fr;
+                height: 80vh;
+            }
+
+            .photo-main {
+                grid-column: span 1;
+            }
+
+            .magazine-hero.condensed .magazine-grid {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: 1fr;
+                height: 50px;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+            }
+
+            .magazine-hero.condensed .hero-title {
+                font-size: 1rem;
+                letter-spacing: 1px;
+            }
+
+            .video-title {
+                font-size: 2.5rem;
+            }
+
+            .scroll-container {
+                bottom: 80px;
+            }
+
+            .content.with-navbar {
+                padding-top: 80px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .magazine-hero {
+                padding: 10px;
+            }
+
+            .magazine-grid {
+                gap: 10px;
+                height: 75vh;
+            }
+
+            .hero-title {
+                font-size: 1.5rem;
+                letter-spacing: 1px;
+            }
+
+            .video-title {
+                font-size: 2rem;
+            }
+
+            .video-description {
+                font-size: 1rem;
+                padding: 0 20px;
+            }
+
+            .scroll-item {
+                min-width: 140px;
+                height: 80px;
+            }
+
+            .scroll-item img {
+                height: 55px;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Magazine Title Section -->
-    <div class="magazine-section" id="magazineSection">
-        <div class="magazine-photo" onclick="openPortrait()">
-            <img src="photos/DSC08528.JPG" alt="Portrait">
-            <div class="magazine-text">
-                <h3 style="color: var(--cool-yellow); font-family: 'Oswald', sans-serif;">DIRECTOR</h3>
-                <p style="font-size: 0.9rem; font-family: 'JetBrains Mono', monospace;">Visual storyteller with a passion for cinematic excellence</p>
+    <!-- Magazine Hero Section -->
+    <section class="magazine-hero" id="magazineHero">
+        <div class="magazine-grid">
+            <!-- Main photo with name overlay -->
+            <div class="photo-card photo-main" onclick="openContact()">
+                <img src="photos/DSC08528.JPG" alt="Arum Wilson">
+                <div class="name-overlay">
+                    <h1 class="hero-title">ARUM WILSON</h1>
+                    <p class="subtitle">FILM DIRECTOR</p>
+                </div>
             </div>
-        </div>
-        <div class="magazine-photo">
-            <img src="photos/DSC08530.JPG" alt="Behind the scenes">
-            <div class="magazine-text">
-                <h3 style="color: var(--neon-red); font-family: 'Oswald', sans-serif;">BEHIND THE LENS</h3>
-                <p style="font-size: 0.9rem; font-family: 'JetBrains Mono', monospace;">Crafting stories that resonate</p>
+            
+            <!-- Other photos -->
+            <div class="photo-card">
+                <img src="photos/DSC08530.JPG" alt="Behind the scenes">
+                <div class="photo-desc">
+                    <div class="desc-title">BEHIND THE LENS</div>
+                    <div class="desc-text">Crafting stories that resonate</div>
+                </div>
             </div>
-        </div>
-        <div class="magazine-photo">
-            <img src="photos/DSC08557.JPG" alt="Creative process">
-            <div class="magazine-text">
-                <h3 style="color: var(--accent-orange); font-family: 'Oswald', sans-serif;">CREATIVE VISION</h3>
-                <p style="font-size: 0.9rem; font-family: 'JetBrains Mono', monospace;">Where imagination meets reality</p>
+            
+            <div class="photo-card">
+                <img src="photos/DSC08557.JPG" alt="Creative process">
+                <div class="photo-desc">
+                    <div class="desc-title">CREATIVE VISION</div>
+                    <div class="desc-text">Where imagination meets reality</div>
+                </div>
             </div>
-        </div>
-        <div class="magazine-photo">
-            <img src="photos/DSC08560.JPG" alt="Equipment">
-            <div class="magazine-text">
-                <h3 style="color: var(--cool-blue); font-family: 'Oswald', sans-serif;">TECHNOLOGY</h3>
-                <p style="font-size: 0.9rem; font-family: 'JetBrains Mono', monospace;">State-of-the-art filmmaking tools</p>
+            
+            <div class="photo-card">
+                <img src="photos/DSC08560.JPG" alt="Equipment">
+                <div class="photo-desc">
+                    <div class="desc-title">CINEMATOGRAPHY</div>
+                    <div class="desc-text">State-of-the-art filmmaking</div>
+                </div>
             </div>
-        </div>
-        
-        <div class="magazine-title">
-            <h1 class="hero-title">ARUM WILSON</h1>
-            <p class="subtitle">FILM DIRECTOR</p>
-        </div>
-    </div>
-
-    <!-- Portrait Modal -->
-    <div class="portrait-modal" id="portraitModal">
-        <button class="close-modal" onclick="closePortrait()">&times;</button>
-        <div class="portrait-content">
-            <img src="photos/DSC08703.JPG" alt="Arum Wilson Portrait">
-            <div class="contact-overlay">
-                <h3 style="color: var(--cool-yellow); margin-bottom: 15px; font-family: 'Oswald', sans-serif;">ARUM WILSON</h3>
-                <p style="margin-bottom: 10px;"><i class="fas fa-envelope" style="color: var(--neon-red);"></i> arum@filmmaker.com</p>
-                <p style="margin-bottom: 10px;"><i class="fas fa-phone" style="color: var(--neon-red);"></i> +1 (555) 123-4567</p>
-                <p style="margin-bottom: 15px;"><i class="fas fa-map-marker-alt" style="color: var(--neon-red);"></i> Los Angeles, CA</p>
-                <div style="display: flex; gap: 15px; justify-content: center;">
-                    <a href="#" style="color: var(--vintage-white); font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
-                    <a href="#" style="color: var(--vintage-white); font-size: 1.5rem;"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" style="color: var(--vintage-white); font-size: 1.5rem;"><i class="fab fa-vimeo"></i></a>
+            
+            <div class="photo-card">
+                <img src="photos/DSC08703.JPG" alt="On set">
+                <div class="photo-desc">
+                    <div class="desc-title">ON SET</div>
+                    <div class="desc-text">Directing with passion</div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Video Section 1: Child Number 1 -->
-    <div class="video-section content-padding" id="video1">
-        <div class="video-thumbnail" onclick="openVideoModal('child-number-1')">
-            <img src="photos/IMG_5485.JPG" alt="Child Number 1">
+    <!-- Content Sections -->
+    <div class="content" id="content">
+        <!-- Video Section 1: Child Number 1 -->
+        <section class="video-section" onclick="openVideo('child-number-1')">
+            <div class="video-thumbnail">
+                <img src="photos/IMG_5485.JPG" alt="Child Number 1">
+            </div>
             <div class="video-overlay">
-                <div class="video-info">
-                    <h2 class="video-title">CHILD NUMBER 1</h2>
-                    <p class="video-description">A powerful documentary exploring the complexities of childhood through intimate storytelling and raw emotion.</p>
-                    <div class="play-button">
-                        <i class="fas fa-play"></i>
-                    </div>
+                <h2 class="video-title">CHILD NUMBER 1</h2>
+                <p class="video-description">A powerful documentary exploring childhood through intimate storytelling and raw emotion</p>
+                <div class="play-button">
+                    <i class="fas fa-play"></i>
                 </div>
             </div>
-        </div>
-        <button class="scroll-arrow left" onclick="scrollHorizontal('video1', -1)">&lt;</button>
-        <button class="scroll-arrow right" onclick="scrollHorizontal('video1', 1)">&gt;</button>
-        <div class="horizontal-scroll" id="scroll1">
-            <div class="scroll-item" onclick="openVideoModal('child-number-1')">
-                <img src="photos/IMG_5579.JPG" alt="Scene 1">
-                <div class="scroll-item-title">Opening Scene</div>
+            <div class="scroll-container">
+                <div class="scroll-item" onclick="openVideo('child-number-1', event)">
+                    <img src="photos/IMG_5579.JPG" alt="Scene 1">
+                    <div class="scroll-item-title">Opening</div>
+                </div>
+                <div class="scroll-item" onclick="openVideo('child-number-1', event)">
+                    <img src="photos/IMG_5580.JPG" alt="Scene 2">
+                    <div class="scroll-item-title">Development</div>
+                </div>
+                <div class="scroll-item" onclick="openVideo('child-number-1', event)">
+                    <img src="photos/IMG_5595.JPG" alt="Scene 3">
+                    <div class="scroll-item-title">Climax</div>
+                </div>
+                <div class="scroll-item" onclick="openVideo('child-number-1', event)">
+                    <img src="photos/DSC09111.JPG" alt="Scene 4">
+                    <div class="scroll-item-title">Resolution</div>
+                </div>
             </div>
-            <div class="scroll-item" onclick="openVideoModal('child-number-1')">
-                <img src="photos/IMG_5580.JPG" alt="Scene 2">
-                <div class="scroll-item-title">Character Development</div>
+        </section>
+
+        <!-- Video Section 2: Reflections -->
+        <section class="video-section" onclick="openVideo('reflections')">
+            <div class="video-thumbnail">
+                <img src="photos/DSC08703.JPG" alt="Reflections">
             </div>
-            <div class="scroll-item" onclick="openVideoModal('child-number-1')">
-                <img src="photos/IMG_5595.JPG" alt="Scene 3">
-                <div class="scroll-item-title">Climax</div>
+            <div class="video-overlay">
+                <h2 class="video-title">REFLECTIONS</h2>
+                <p class="video-description">An experimental film blurring the lines between reality and dreams</p>
+                <div class="play-button">
+                    <i class="fas fa-play"></i>
+                </div>
             </div>
-            <div class="scroll-item" onclick="openVideoModal('child-number-1')">
-                <img src="photos/DSC09111.JPG" alt="Scene 4">
-                <div class="scroll-item-title">Resolution</div>
+            <div class="scroll-container">
+                <div class="scroll-item" onclick="openVideo('reflections', event)">
+                    <img src="photos/DSC09111.JPG" alt="Scene 1">
+                    <div class="scroll-item-title">Dreams</div>
+                </div>
+                <div class="scroll-item" onclick="openVideo('reflections', event)">
+                    <img src="photos/DSC08560.JPG" alt="Scene 2">
+                    <div class="scroll-item-title">Reality</div>
+                </div>
+                <div class="scroll-item" onclick="openVideo('reflections', event)">
+                    <img src="photos/DSC08557.JPG" alt="Scene 3">
+                    <div class="scroll-item-title">Transform</div>
+                </div>
+                <div class="scroll-item" onclick="openVideo('reflections', event)">
+                    <img src="photos/DSC08530.JPG" alt="Scene 4">
+                    <div class="scroll-item-title">Awakening</div>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Video Section 3: Urban Symphony -->
+        <section class="video-section" onclick="openVideo('urban-symphony')">
+            <div class="video-thumbnail">
+                <img src="photos/DSC09111.JPG" alt="Urban Symphony">
+            </div>
+            <div class="video-overlay">
+                <h2 class="video-title">URBAN SYMPHONY</h2>
+                <p class="video-description">A visual poem celebrating city life through dynamic cinematography</p>
+                <div class="play-button">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="scroll-container">
+                <div class="scroll-item" onclick="openVideo('urban-symphony', event)">
+                    <img src="photos/IMG_5485.JPG" alt="Scene 1">
+                    <div class="scroll-item-title">Dawn</div>
+                </div>
+                <div class="scroll-item" onclick="openVideo('urban-symphony', event)">
+                    <img src="photos/IMG_5579.JPG" alt="Scene 2">
+                    <div class="scroll-item-title">Rush</div>
+                </div>
+                <div class="scroll-item" onclick="openVideo('urban-symphony', event)">
+                    <img src="photos/IMG_5580.JPG" alt="Scene 3">
+                    <div class="scroll-item-title">Night</div>
+                </div>
+                <div class="scroll-item" onclick="openVideo('urban-symphony', event)">
+                    <img src="photos/IMG_5595.JPG" alt="Scene 4">
+                    <div class="scroll-item-title">Dreams</div>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <!-- Video Section 2: Project Two -->
-    <div class="video-section" id="video2">
-        <div class="video-thumbnail" onclick="openVideoModal('project-two')">
-            <img src="photos/DSC08703.JPG" alt="Project Two">
-            <div class="video-overlay">
-                <div class="video-info">
-                    <h2 class="video-title">REFLECTIONS</h2>
-                    <p class="video-description">An experimental film that blurs the lines between reality and dreams, exploring human consciousness.</p>
-                    <div class="play-button">
-                        <i class="fas fa-play"></i>
-                    </div>
-                </div>
+    <!-- Contact Modal -->
+    <div class="contact-modal" id="contactModal">
+        <button class="close-btn" onclick="closeContact()">&times;</button>
+        <div class="contact-content">
+            <h2 class="contact-title">ARUM WILSON</h2>
+            <div class="contact-info">
+                <i class="fas fa-envelope"></i>
+                arum@filmmaker.com
             </div>
-        </div>
-        <button class="scroll-arrow left" onclick="scrollHorizontal('video2', -1)">&lt;</button>
-        <button class="scroll-arrow right" onclick="scrollHorizontal('video2', 1)">&gt;</button>
-        <div class="horizontal-scroll" id="scroll2">
-            <div class="scroll-item" onclick="openVideoModal('project-two')">
-                <img src="photos/DSC09111.JPG" alt="Scene 1">
-                <div class="scroll-item-title">Dream Sequence</div>
+            <div class="contact-info">
+                <i class="fas fa-phone"></i>
+                +1 (555) 123-4567
             </div>
-            <div class="scroll-item" onclick="openVideoModal('project-two')">
-                <img src="photos/DSC08560.JPG" alt="Scene 2">
-                <div class="scroll-item-title">Reality Check</div>
+            <div class="contact-info">
+                <i class="fas fa-map-marker-alt"></i>
+                Los Angeles, CA
             </div>
-            <div class="scroll-item" onclick="openVideoModal('project-two')">
-                <img src="photos/DSC08557.JPG" alt="Scene 3">
-                <div class="scroll-item-title">Transformation</div>
-            </div>
-            <div class="scroll-item" onclick="openVideoModal('project-two')">
-                <img src="photos/DSC08530.JPG" alt="Scene 4">
-                <div class="scroll-item-title">Awakening</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Video Section 3: Project Three -->
-    <div class="video-section" id="video3">
-        <div class="video-thumbnail" onclick="openVideoModal('project-three')">
-            <img src="photos/DSC09111.JPG" alt="Project Three">
-            <div class="video-overlay">
-                <div class="video-info">
-                    <h2 class="video-title">URBAN SYMPHONY</h2>
-                    <p class="video-description">A visual poem celebrating the rhythm and energy of city life through dynamic cinematography.</p>
-                    <div class="play-button">
-                        <i class="fas fa-play"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <button class="scroll-arrow left" onclick="scrollHorizontal('video3', -1)">&lt;</button>
-        <button class="scroll-arrow right" onclick="scrollHorizontal('video3', 1)">&gt;</button>
-        <div class="horizontal-scroll" id="scroll3">
-            <div class="scroll-item" onclick="openVideoModal('project-three')">
-                <img src="photos/IMG_5485.JPG" alt="Scene 1">
-                <div class="scroll-item-title">Dawn Commute</div>
-            </div>
-            <div class="scroll-item" onclick="openVideoModal('project-three')">
-                <img src="photos/IMG_5579.JPG" alt="Scene 2">
-                <div class="scroll-item-title">Rush Hour</div>
-            </div>
-            <div class="scroll-item" onclick="openVideoModal('project-three')">
-                <img src="photos/IMG_5580.JPG" alt="Scene 3">
-                <div class="scroll-item-title">Night Lights</div>
-            </div>
-            <div class="scroll-item" onclick="openVideoModal('project-three')">
-                <img src="photos/IMG_5595.JPG" alt="Scene 4">
-                <div class="scroll-item-title">City Dreams</div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-vimeo"></i></a>
+                <a href="mailto:arum@filmmaker.com"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
     </div>
 
     <!-- Video Modal -->
     <div class="video-modal" id="videoModal">
-        <button class="close-modal" onclick="closeVideoModal()">&times;</button>
-        <div class="video-modal-content">
+        <button class="close-btn" onclick="closeVideo()">&times;</button>
+        <div class="video-content">
             <iframe id="videoFrame" src="" allowfullscreen></iframe>
         </div>
     </div>
 
     <script>
-        // Magazine section condensing on scroll
+        // Navbar condensing on scroll
+        let isCondensed = false;
+
         window.addEventListener('scroll', () => {
-            const magazineSection = document.getElementById('magazineSection');
             const scrollTop = window.pageYOffset;
+            const magazineHero = document.getElementById('magazineHero');
+            const content = document.getElementById('content');
             
-            if (scrollTop > 100) {
-                magazineSection.classList.add('condensed');
-            } else {
-                magazineSection.classList.remove('condensed');
+            if (scrollTop > 100 && !isCondensed) {
+                magazineHero.classList.add('condensed');
+                content.classList.add('with-navbar');
+                isCondensed = true;
+            } else if (scrollTop <= 100 && isCondensed) {
+                magazineHero.classList.remove('condensed');
+                content.classList.remove('with-navbar');
+                isCondensed = false;
             }
         });
 
-        // Portrait modal functions
-        function openPortrait() {
-            document.getElementById('portraitModal').classList.add('active');
+        // Contact modal functions
+        function openContact() {
+            document.getElementById('contactModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
-        function closePortrait() {
-            document.getElementById('portraitModal').classList.remove('active');
+        function closeContact() {
+            document.getElementById('contactModal').classList.remove('active');
             document.body.style.overflow = 'auto';
         }
 
         // Video modal functions
-        function openVideoModal(projectId) {
-            const modal = document.getElementById('videoModal');
+        function openVideo(projectId, event) {
+            if (event) event.stopPropagation();
+            
+            const videoModal = document.getElementById('videoModal');
             const videoFrame = document.getElementById('videoFrame');
             
             // Replace with actual video URLs
             const videoUrls = {
                 'child-number-1': 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-                'project-two': 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-                'project-three': 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+                'reflections': 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'urban-symphony': 'https://www.youtube.com/embed/dQw4w9WgXcQ'
             };
             
             videoFrame.src = videoUrls[projectId] || '';
-            modal.classList.add('active');
+            videoModal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
-        function closeVideoModal() {
-            const modal = document.getElementById('videoModal');
+        function closeVideo() {
+            const videoModal = document.getElementById('videoModal');
             const videoFrame = document.getElementById('videoFrame');
             
-            modal.classList.remove('active');
+            videoModal.classList.remove('active');
             videoFrame.src = '';
             document.body.style.overflow = 'auto';
         }
 
-        // Horizontal scroll functionality
-        function scrollHorizontal(sectionId, direction) {
-            const scrollContainer = document.getElementById(sectionId.replace('video', 'scroll'));
-            const scrollAmount = 220; // width of scroll item + gap
-            
-            scrollContainer.scrollBy({
-                left: direction * scrollAmount,
-                behavior: 'smooth'
-            });
-        }
-
-        // Dynamic zoom effect on magazine photos
-        document.querySelectorAll('.magazine-photo').forEach(photo => {
-            photo.addEventListener('mousemove', (e) => {
-                const rect = photo.getBoundingClientRect();
+        // Dynamic zoom effects
+        document.querySelectorAll('.photo-card, .video-thumbnail').forEach(element => {
+            element.addEventListener('mousemove', (e) => {
+                const rect = element.getBoundingClientRect();
                 const x = ((e.clientX - rect.left) / rect.width) * 100;
                 const y = ((e.clientY - rect.top) / rect.height) * 100;
                 
-                const img = photo.querySelector('img');
-                img.style.transformOrigin = `${x}% ${y}%`;
-            });
-        });
-
-        // Video thumbnail dynamic zoom
-        document.querySelectorAll('.video-thumbnail').forEach(thumbnail => {
-            thumbnail.addEventListener('mousemove', (e) => {
-                const rect = thumbnail.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-                
-                const img = thumbnail.querySelector('img');
-                img.style.transformOrigin = `${x}% ${y}%`;
+                const img = element.querySelector('img');
+                if (img) {
+                    img.style.transformOrigin = `${x}% ${y}%`;
+                }
             });
         });
 
         // Close modals on escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                closePortrait();
-                closeVideoModal();
+                closeContact();
+                closeVideo();
             }
         });
 
-        // Close modals on outside click
-        document.getElementById('portraitModal').addEventListener('click', (e) => {
-            if (e.target.id === 'portraitModal') closePortrait();
+        // Close modals on background click
+        document.getElementById('contactModal').addEventListener('click', (e) => {
+            if (e.target.id === 'contactModal') closeContact();
         });
 
         document.getElementById('videoModal').addEventListener('click', (e) => {
-            if (e.target.id === 'videoModal') closeVideoModal();
-        });
-
-        // Smooth parallax effect
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.video-thumbnail img');
-            
-            parallaxElements.forEach((el, index) => {
-                const speed = 0.5 + (index * 0.1);
-                el.style.transform = `translateY(${scrolled * speed}px) scale(1.05)`;
-            });
+            if (e.target.id === 'videoModal') closeVideo();
         });
     </script>
 </body>
